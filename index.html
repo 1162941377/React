@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- <script>
+    const span = React.createElement('span', {}, '这是span标签');
+
+    const h1 = React.createElement('h1', {
+      title: '这是一个好h1标签'
+    }, 'Hello World', span);
+
+    ReactDOM.render(h1, document.getElementById('root'));
+  </script> -->
+
+  <script type="text/babel">
+    // 表明要通过babel库进行转义
+    const content =  <h1>Hello World<span>span</span></h1>;
+    
+    ReactDOM.render(content, document.getElementById('root'));
+  </script>
+</body>
+
+</html>
