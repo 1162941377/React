@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import A from "./components/Test";
+import BallList from "./components/BallList";
 
-ReactDOM.render(<A />, document.getElementById("root"));
+ReactDOM.render(<BallList />, document.getElementById("root"));
