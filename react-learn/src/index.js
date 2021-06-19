@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Cmp from "./Cmp";
+import App from "./App";
 
-ReactDOM.render(<Cmp />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
