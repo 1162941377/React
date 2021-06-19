@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import PagerControl from "./components/PagerControl";
+import Cmp from "./Cmp";
 
-ReactDOM.render(<PagerControl />, document.getElementById("root"));
+ReactDOM.render(<Cmp />, document.getElementById("root"));
