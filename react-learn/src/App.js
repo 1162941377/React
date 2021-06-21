@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import Cmp from "./Cmp";
+import Test from "./components/Banner/Test";
 
 export default class App extends Component {
   render() {
     return (
       <>
-        <Cmp />
+        <Test />
       </>
     );
   }
