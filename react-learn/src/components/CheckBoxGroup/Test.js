@@ -3,18 +3,7 @@ import CheckBoxGroup from "./index";
 import { getAllStudents } from "../../services/studentData";
 
 export default class Test extends Component {
-  state = {
-    // datas: [
-    //   { value: "football", text: "足球" },
-    //   { value: "basketball", text: "篮球" },
-    //   { value: "movie", text: "电影" },
-    //   { value: "music", text: "音乐" },
-    //   { value: "other", text: "其它" },
-    // ],
-    datas: [],
-    name: "loves",
-    chooseDatas: [],
-  };
+  state = { datas: [], chooseDatas: [] };
 
   onChange = (newArr) => {
     // console.log(newArr);
@@ -36,7 +25,7 @@ export default class Test extends Component {
   render() {
     return (
       <>
-        <CheckBoxGroup {...this.state} onChange={this.onChange} />
+        <CheckBoxGroup name="loves" {...this.state} onChange={this.onChange} />
       </>
     );
   }

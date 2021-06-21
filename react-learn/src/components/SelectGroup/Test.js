@@ -3,21 +3,10 @@ import SelectGroup from "./index";
 import { getAllStudents } from "../../services/studentData";
 
 export default class Test extends Component {
-  state = {
-    // datas: [
-    //   { value: "football", text: "足球" },
-    //   { value: "basketball", text: "篮球" },
-    //   { value: "movie", text: "电影" },
-    //   { value: "music", text: "音乐" },
-    //   { value: "other", text: "其它" },
-    // ],
-    datas: [],
-    name: "loves",
-    value: "",
-  };
+  state = { datas: [], value: "" };
 
   onChange = (target) => {
-    console.log(target);
+    // console.log(target);
     this.setState({
       value: target,
     });
@@ -36,7 +25,7 @@ export default class Test extends Component {
   render() {
     return (
       <>
-        <SelectGroup {...this.state} onChange={this.onChange} />
+        <SelectGroup name="loves" {...this.state} onChange={this.onChange} />
       </>
     );
   }

@@ -1,25 +1,16 @@
 import React, { Component } from "react";
 import types from "../../utils/commonTypes";
-import PropTypes from "prop-types";
+import withDataGroup from "../HOC/withDataGroup";
 
-export default class index extends Component {
-  /**
-   * 属性默认值
-   */
-  static defaultProps = {
-    datas: [],
-    chooseDatas: [],
-  };
-
+export class CheckBox extends Component {
   static propTypes = {
-    datas: types.groupDatas.isRequired,
-    name: PropTypes.string.isRequired,
-    chooseDatas: types.chooseDatas,
-    onChange: PropTypes.func,
+    name: types.name.isRequired,
+    onChange: types.onChange,
+    info: types.singleData.isRequired,
+    chooseDatas: types.chooseDatas.isRequired,
   };
 
   handleChange = (e) => {
-    let name = e.target.name;
     let value = e.target.value;
     let newArr = [];
     if (e.target.checked) {
@@ -28,29 +19,26 @@ export default class index extends Component {
       newArr = this.props.chooseDatas.filter((it) => it !== value);
     }
 
-    this.props.onChange && this.props.onChange(newArr, e, name);
+    this.props.onChange && this.props.onChange(newArr);
   };
 
-  // 设置多选框
-  getCheckBoxs() {
-    // console.log(this.props.datas);
-    return this.props.datas.map((it) => (
-      <label key={it.value}>
-        <input
-          type="checkbox"
-          name={this.props.name}
-          value={it.value}
-          checked={this.props.chooseDatas.includes(it.value)}
-          onChange={this.handleChange}
-        />
-        {it.text}
-      </label>
-    ));
-  }
-
   render() {
-    const bs = this.getCheckBoxs();
-
-    return <>{bs}</>;
+    return (
+      <>
+        <label>
+          <input
+            type="checkbox"
+            name={this.props.name}
+            value={this.props.info.value}
+            checked={this.props.chooseDatas.includes(this.props.info.value)}
+            onChange={this.handleChange}
+          />
+          {this.props.info.text}
+        </label>
+      </>
+    );
   }
 }
+
+// 经过高阶组件处理后，得到一组多选框
+export default withDataGroup(CheckBox);

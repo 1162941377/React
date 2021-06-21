@@ -1,40 +1,38 @@
 import React, { Component } from "react";
 import types from "../../utils/commonTypes";
-import PropTypes from "prop-types";
+import withDataGroup from "../HOC/withDataGroup";
 
-export default class index extends Component {
-  /**
-   * 属性默认值
-   */
-  static defaultProps = {
-    datas: [],
-    value: "",
+export class Option extends Component {
+  static propTypes = {
+    info: types.singleData.isRequired, // 一个option下拉列表的值
   };
 
+  render() {
+    // console.log(this.props);
+    return (
+      <>
+        <option value={this.props.info.value}>{this.props.info.text}</option>
+      </>
+    );
+  }
+}
+
+const OptGroup = withDataGroup(Option);
+
+export default class Select extends Component {
   static propTypes = {
-    datas: types.groupDatas.isRequired,
-    value: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    onChange: PropTypes.func,
+    value: types.value.isRequired, // 当前下列列表显示的值
+    name: types.name.isRequired,
+    onChange: types.onChange,
   };
 
   handleChange = (e) => {
-    this.props.onChange && this.props.onChange(e.target.value);
+    let value = e.target.value;
+    this.props.onChange && this.props.onChange(value);
   };
 
-  // 设置单选框
-  getSelect() {
-    // console.log(this.props.datas);
-    return this.props.datas.map((it) => (
-      <option value={it.value} key={it.value}>
-        {it.text}
-      </option>
-    ));
-  }
-
   render() {
-    const options = this.getSelect();
-
+    // console.log(this.props);
     return (
       <>
         <select
@@ -42,7 +40,7 @@ export default class index extends Component {
           value={this.props.value}
           onChange={this.handleChange}
         >
-          {options}
+          <OptGroup {...this.props} />
         </select>
       </>
     );
