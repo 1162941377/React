@@ -1,6 +1,20 @@
 import React, { Component } from "react";
+import types from "../../utils/commonTypes";
+import PropTypes from "prop-types";
 
 export default class index extends Component {
+  static defaultProps = {
+    datas: [],
+    value: "",
+  };
+
+  static propTypes = {
+    datas: types.groupDatas.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func,
+  };
+
   handleChange = (e) => {
     this.props.onChange && this.props.onChange(e.target.value);
   };
