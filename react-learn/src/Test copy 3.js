@@ -51,9 +51,6 @@ function Comp3() {
 }
 
 export default function Test() {
-  setTimeout(() => {
-    throw new Error("error");
-  }, 0);
   return (
     <div>
       <ErrorBound>
