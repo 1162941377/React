@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Test from "./components/MouseEvent/Test";
+import Test from "./Test";
 
 export default class App extends Component {
   render() {
