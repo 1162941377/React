@@ -1,36 +1,56 @@
-import React from "react";
+import React, { Component } from "react";
 
-let prev;
+class CompA extends Component {
+  state = {
+    n: 1,
+  };
 
-export default function Test() {
-  return (
-    <div
-      onClick={(e) => {
-        console.log(prev === e);
-        console.log("react: div被点击了");
-      }}
-    >
-      <input
-        type="text"
-        onFocus={(e) => {
-          console.log("react: input获得了焦点");
-        }}
-      />
-      <button
-        onClick={(e) => {
-          console.log("react: button被点击了");
-          prev = e;
-          e.persist();
-          setTimeout(() => {
-            console.log(e.type);
-          }, 1000);
-        }}
-      >click</button>
-    </div>
-  );
+  componentDidMount() {
+    console.log("CompA 新建");
+  }
+
+  componentWillUnmount() {
+    console.log("CompA 卸载");
+  }
+
+  render() {
+    return (
+      <div>
+        数字：{this.state.n}{" "}
+        <button
+          onClick={() => {
+            this.setState({
+              n: this.state.n + 1,
+            });
+          }}
+        >
+          +
+        </button>
+      </div>
+    );
+  }
 }
 
-document.querySelector("#root").onfocus = function (e) {
-  console.log("阻止focus事件冒泡");
-  e.stopPropagation();
-};
+export default class App extends Component {
+  state = {
+    arr: [<CompA key={1} />, <CompA key={2} />],
+    nextId: 3,
+  };
+  render() {
+    return (
+      <div>
+        {this.state.arr}
+        <button
+          onClick={() => {
+            this.setState({
+              arr: [<CompA key={this.state.nextId} />, ...this.state.arr],
+              nextId: this.state.nextId + 1,
+            });
+          }}
+        >
+          添加一项
+        </button>
+      </div>
+    );
+  }
+}
