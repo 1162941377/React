@@ -1,65 +1,36 @@
 import React from "react";
-import ErrorBound from "./components/ErrorBound";
 
-function Comp1() {
-  return (
-    <div
-      style={{
-        width: "90%",
-        height: 500,
-        border: "2px solid",
-      }}
-    >
-      <h1>Comp1</h1>
-      <Comp2 />
-    </div>
-  );
-}
-
-function Comp2() {
-  return (
-    <div
-      style={{
-        width: "70%",
-        height: "70%",
-        border: "2px solid",
-      }}
-    >
-      <h1
-        onClick={() => {
-          throw new Error("点击时发生的错误");
-        }}
-      >
-        Comp2
-      </h1>
-    </div>
-  );
-}
-
-function Comp3() {
-  return (
-    <div
-      style={{
-        width: "90%",
-        height: 500,
-        border: "2px solid",
-      }}
-    >
-      <h1>Comp3</h1>
-    </div>
-  );
-}
+let prev;
 
 export default function Test() {
-  setTimeout(() => {
-    throw new Error("error");
-  }, 0);
   return (
-    <div>
-      <ErrorBound>
-        <Comp1 />
-      </ErrorBound>
-      <Comp3 />
+    <div
+      onClick={(e) => {
+        console.log(prev === e);
+        console.log("react: div被点击了");
+      }}
+    >
+      <input
+        type="text"
+        onFocus={(e) => {
+          console.log("react: input获得了焦点");
+        }}
+      />
+      <button
+        onClick={(e) => {
+          console.log("react: button被点击了");
+          prev = e;
+          e.persist();
+          setTimeout(() => {
+            console.log(e.type);
+          }, 1000);
+        }}
+      >click</button>
     </div>
   );
 }
+
+document.querySelector("#root").onfocus = function (e) {
+  console.log("阻止focus事件冒泡");
+  e.stopPropagation();
+};
