@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function App() {
-  console.log("App render");
-  const [data, setData] = useState({
-    x: 1,
-    y: 2,
+  const [n, setN] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log(n); // n指向，当前App调用函数时的n
+    }, 2000);
   });
+
   return (
-    <p>
-      x: {data.x} y: {data.y}
+    <>
+      <h1>{n}</h1>
       <button
         onClick={() => {
-          setData({
-            ...data,
-            x: data.x + 1,
-          });
+          setN(n + 1);
         }}
       >
-        x + 1
+        n + 1
       </button>
-    </p>
+    </>
   );
 }

@@ -1,17 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
+// 以下是错误的做法
 export default function App() {
-  console.log("App render");
-  const [, forceUpdate] = useState({});
+  const [n, setN] = useState(10);
+
+  useEffect(() => {
+    // 仅在挂载后运行
+    const timer = setInterval(() => {
+      const newN = n - 1;
+      console.log(newN);
+      setN(newN);
+
+      if (newN === 0) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => {
+      // 仅在函数卸载时运行
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
-    <p>
+    <>
+      <h1>{n}</h1>
       <button
         onClick={() => {
-          forceUpdate({});
+          setN(n + 1);
         }}
       >
-        强制刷新
+        n + 1
       </button>
-    </p>
+    </>
   );
 }

@@ -1,38 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function App() {
-  console.log("App render");
-  const [visible, setVisible] = useState(false);
-  const [n, setN] = useState(0);
+function Test() {
+  useEffect(() => {
+    console.log("副作用函数，仅在挂载时运行一次");
+    return () => {
+      console.log("清理函数，仅在卸载时运行一次");
+    };
+  }, []); // 使用空数组，则副作用函数仅在挂载阶段运行
+
+  console.log("渲染组件");
+
+  const [, forceUpdate] = useState({});
+
   return (
-    <>
-      <p
-        style={{
-          display: visible ? "block" : "none",
+    <h1>
+      Test组件
+      <button
+        onClick={() => {
+          forceUpdate({});
         }}
       >
-        <button
-          onClick={() => {
-            setN(n - 1);
-          }}
-        >
-          -
-        </button>
-        <span>{n}</span>
-        <button
-          onClick={() => {
-            setN(n + 1);
-          }}
-        >
-          +
-        </button>
-      </p>
+        刷新组件
+      </button>
+    </h1>
+  );
+}
+
+export default function App() {
+  const [visible, setVisible] = useState(true);
+  return (
+    <>
+      {visible && <Test />}
       <button
         onClick={() => {
           setVisible(!visible);
         }}
       >
-        show/hidden
+        显示/隐藏
       </button>
     </>
   );
