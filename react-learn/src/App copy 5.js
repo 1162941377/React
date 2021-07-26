@@ -1,37 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
+import { getAllStudents } from "./services/student";
 
-// 以下是错误的做法
+class AllStudents extends Component {
+  state = {
+    stus: [],
+  };
+
+  async componentDidMount() {
+    const stus = await getAllStudents();
+    this.setState({
+      stus,
+    });
+  }
+
+  render() {
+    if (typeof this.props.render === "function") {
+      return this.props.render(this.state.stus);
+    }
+    return null;
+  }
+}
+
+function Test(props) {
+  const list = props.stus.map((it) => <li key={it.id}>{it.name}</li>);
+  return <ul>{list}</ul>;
+}
+
 export default function App() {
-  const [n, setN] = useState(10);
-
-  useEffect(() => {
-    // 仅在挂载后运行
-    const timer = setInterval(() => {
-      const newN = n - 1;
-      console.log(newN);
-      setN(newN);
-
-      if (newN === 0) {
-        clearInterval(timer);
-      }
-    }, 1000);
-
-    return () => {
-      // 仅在函数卸载时运行
-      clearInterval(timer);
-    };
-  }, []);
-
-  return (
-    <>
-      <h1>{n}</h1>
-      <button
-        onClick={() => {
-          setN(n + 1);
-        }}
-      >
-        n + 1
-      </button>
-    </>
-  );
+  return <AllStudents render={(stus) => <Test stus={stus} />} />;
 }

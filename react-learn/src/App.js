@@ -1,29 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import useTimer from "./myHooks/useTimer";
+
+function Test(props) {
+  useTimer(() => {
+    console.log("Test组件的一些副作用操作");
+  }, 1000);
+  return <h1>Test组件</h1>;
+}
 
 export default function App() {
-  const [n, setN] = useState(10);
-
-  useEffect(() => {
-    if (n === 0) {
-      return;
-    }
-
-    // 第一次渲染后，需要根据当前的n值，1秒后重新渲染
-    setTimeout(() => {
-      setN(n - 1);
-    }, 1000);
-  }, [n]);
-
+  const [visible, setVisible] = useState(true);
   return (
     <>
-      <h1>{n}</h1>
-      <button
-        onClick={() => {
-          setN(n + 1);
-        }}
-      >
-        n + 1
-      </button>
+      {visible && <Test />}
+      <button onClick={() => setVisible(!visible)}>隐藏/显示</button>
     </>
   );
 }

@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import usePageStudents from "./myHooks/usePageStudents";
+
+function Test() {
+  const [page, setPage] = useState(1);
+  const resp = usePageStudents(page, 10);
+  if (resp) {
+    const list = resp.findByPage.map((it) => <li key={it.id}>{it.name}</li>);
+    return (
+      <>
+        <h1>数据总数：{resp.cont}</h1>
+        <ul>{list}</ul>
+        <input
+          type="number"
+          value={page}
+          onChange={(e) => setPage(e.target.value)}
+        />
+      </>
+    );
+  }
+  return null;
+}
 
 export default function App() {
-  const [n, setN] = useState(0);
-
-  useEffect(() => {
-    setTimeout(() => {
-      console.log(n); // n指向，当前App调用函数时的n
-    }, 2000);
-  });
-
-  return (
-    <>
-      <h1>{n}</h1>
-      <button
-        onClick={() => {
-          setN(n + 1);
-        }}
-      >
-        n + 1
-      </button>
-    </>
-  );
+  return <Test />;
 }

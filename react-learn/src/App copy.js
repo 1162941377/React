@@ -1,28 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import useAllStudents from "./myHooks/useAllStudents";
+
+function Test() {
+  const stus = useAllStudents();
+  const list = stus.map((it) => <li key={it.id}>{it.name}</li>);
+  return <ul>{list}</ul>;
+}
 
 export default function App() {
-  const [n, setN] = useState(0);
-  // 以下代码属于副作用
-  // document.title = `计时器：${n}`;
-  useEffect(() => {
-    console.log("执行了改变页面标题的副作用");
-    document.title = `计时器：${n}`;
-  });
-
-  useEffect(() => {
-    console.log("执行了其它的副作用");
-  });
-
-  return (
-    <>
-      <span>{n}</span>
-      <button
-        onClick={() => {
-          setN(n + 1);
-        }}
-      >
-        +
-      </button>
-    </>
-  );
+  return <Test />;
 }
