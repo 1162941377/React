@@ -1,29 +1,27 @@
-import React, { PureComponent, useState, useCallback } from "react";
+import React, { useState, useMemo } from "react";
 
-class Test extends PureComponent {
-  render() {
-    console.log("Test render");
-    return (
-      <>
-        <h1>{this.props.text}</h1>
-        <button onClick={this.props.onClick}>改变文本</button>
-      </>
-    );
-  }
+function Item(props) {
+  console.log("Item Render" + props.value);
+  return <li>{props.value}</li>;
 }
 
-function Parent() {
-  console.log("Parent render");
-  const [txt, setTxt] = useState(520);
+export default function App() {
+  const [range] = useState({ min: 1, max: 10000 });
   const [n, setN] = useState(0);
-  const handleClick = useCallback(() => {
-    setTxt(txt + 1);
-  }, [txt]);
+  const list = useMemo(() => {
+    const list = [];
+    for (let i = range.min; i <= range.max; i++) {
+      list.push(<Item key={i} value={i} />);
+    }
+    return list;
+  }, [range.min, range.max]);
+  // const list = [];
+  // for (let i = range.min; i <= range.max; i++) {
+  //   list.push(<Item key={i} value={i} />);
+  // }
   return (
     <>
-      {/* 函数的地址每次渲染都发生了变化，导致了子组件重新渲染，
-      若子组件是经过了优化的组件，则可能导致优化失败 */}
-      <Test text={txt} onClick={handleClick} />
+      <ul>{list}</ul>
       <input
         type="number"
         value={n}
@@ -33,8 +31,4 @@ function Parent() {
       />
     </>
   );
-}
-
-export default function App() {
-  return <Parent />;
 }
