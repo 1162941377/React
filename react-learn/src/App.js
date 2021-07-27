@@ -1,19 +1,24 @@
-import React, { useState } from "react";
-import useTimer from "./myHooks/useTimer";
+import React, { useContext } from "react";
 
-function Test(props) {
-  useTimer(() => {
-    console.log("Test组件的一些副作用操作");
-  }, 1000);
-  return <h1>Test组件</h1>;
+const ctx = React.createContext();
+
+// function Test() {
+//   return (
+//     <ctx.Consumer>{(value) => <h1>Test, 山下文的值：{value}</h1>}</ctx.Consumer>
+//   );
+// }
+
+function Test() {
+  const value = useContext(ctx);
+  return <h1>Test，上下文的值：{value}</h1>;
 }
 
 export default function App() {
-  const [visible, setVisible] = useState(true);
   return (
     <>
-      {visible && <Test />}
-      <button onClick={() => setVisible(!visible)}>隐藏/显示</button>
+      <ctx.Provider value="zjc">
+        <Test />
+      </ctx.Provider>
     </>
   );
 }
