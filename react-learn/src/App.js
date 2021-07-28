@@ -1,20 +1,40 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useImperativeHandle, useRef } from "react";
+
+function Test(props, ref) {
+  useImperativeHandle(
+    ref,
+    () => {
+      /**
+       * 如果不给依赖项，则每次运行函数时都会调用该方法
+       * 如果使用了依赖项，则第一次调用后，进行缓存，只有当依赖项变化时才会重新调用
+       * 相当于给 ref.current = function method() {}
+       */
+      return {
+        method() {
+          console.log("Test Component Called");
+        },
+      };
+    },
+    []
+  );
+  return <h1>Test Component</h1>;
+}
+
+const TestWrapper = React.forwardRef(Test);
 
 export default function App() {
-  const [n, setN] = useState(10);
-  const nRef = useRef(n); // {current: 10}
-  useEffect(() => {
-    const timer = setInterval(() => {
-      nRef.current--;
-      setN(nRef.current);
-      console.log(nRef.current);
-      if (nRef.current === 0) {
-        clearInterval(timer);
-      }
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-  return <h1>{n}</h1>;
+  const testRef = useRef();
+  return (
+    <>
+      <TestWrapper ref={testRef} />
+      <button
+        onClick={() => {
+          testRef.current.method();
+          console.log(testRef);
+        }}
+      >
+        调用了Test组件的method方法
+      </button>
+    </>
+  );
 }

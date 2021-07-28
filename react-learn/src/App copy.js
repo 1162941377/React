@@ -1,24 +1,27 @@
-import React, { useState, useRef } from "react";
+import React, { PureComponent, useRef } from "react";
 
-window.arr = [];
+class Test extends PureComponent {
+  method() {
+    console.log("Test Method Called");
+  }
+
+  render() {
+    return <h1>Test Render</h1>;
+  }
+}
 
 export default function App() {
-  const inpRef = useRef();
-  window.arr.push(inpRef);
-  const [n, setN] = useState(0);
+  const testRef = useRef();
   return (
     <>
-      <input type="text" ref={inpRef} />
-      <br />
+      <Test ref={testRef} />
       <button
         onClick={() => {
-          console.log(inpRef.current.value);
+          testRef.current.method();
         }}
       >
-        得到input的值
+        调用了Test组件的method方法
       </button>
-      <br />
-      <input type="number" value={n} onChange={(e) => setN(e.target.value)} />
     </>
   );
 }
