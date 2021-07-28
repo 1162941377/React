@@ -13,13 +13,7 @@ export default function App() {
   return (
     <>
       <h1 ref={h1Ref}>{n}</h1>
-      <button
-        onClick={() => {
-          setN(n + 1);
-        }}
-      >
-        +
-      </button>
+      <button onClick={() => setN(n + 1)}>+</button>
     </>
   );
 }
