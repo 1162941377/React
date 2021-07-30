@@ -2,18 +2,3 @@
   width: 100px;
   margin: 0 auto;
 }
-
-.cmp-container {
-  height: 100px;
-  position: relative;
-}
-
-.title {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.exit-done {
-  display: none;
-}

@@ -1,48 +1,28 @@
 import React, { useState } from "react";
-import { CSSTransition } from "react-transition-group";
+import { SwitchTransition, CSSTransition } from "react-transition-group";
 import "./App.css";
 import "animate.css";
 
-function MyTransition({ visible, children }) {
-  return (
-    <CSSTransition
-      appear
-      mountOnEnter
-      in={visible}
-      timeout={800}
-      classNames={{
-        exitActive: "animate__fadeOutLeft",
-        exitDone: "exit-done",
-        enterActive: "animate__fadeInRight",
-        appearActive: "animate__fadeInRight",
-      }}
-    >
-      {children}
-    </CSSTransition>
-  );
-}
-
-function Comp1() {
-  return <h1 className="title animate__animated fast">组件1</h1>;
-}
-
-function Comp2() {
-  return <h1 className="title animate__animated fast">组件2</h1>;
-}
-
 export default function App() {
-  const [showComp1, setShowComp1] = useState(true);
+  const [show1, setShow1] = useState(true);
   return (
     <div className="container">
-      <div className="cmp-container">
-        <MyTransition visible={showComp1}>
-          <Comp1 />
-        </MyTransition>
-        <MyTransition visible={!showComp1}>
-          <Comp2 />
-        </MyTransition>
-      </div>
-      <button onClick={() => setShowComp1(!showComp1)}>切换显示状态</button>
+      <SwitchTransition mode="out-in">
+        <CSSTransition
+          appear
+          timeout={800}
+          key={show1}
+          classNames={{
+            exit: "animate__bounceOut",
+            enter: "animate__bounceIn",
+          }}
+        >
+          <h1 className="animate_animated fast">
+            {show1 ? "title1" : "title2"}
+          </h1>
+        </CSSTransition>
+      </SwitchTransition>
+      <button onClick={() => setShow1(!show1)}>切换状态</button>
     </div>
   );
 }
