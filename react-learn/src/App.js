@@ -1,28 +1,39 @@
 import React, { useState } from "react";
-import { SwitchTransition, CSSTransition } from "react-transition-group";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import uuid from "uuid";
 import "./App.css";
-import "animate.css";
 
 export default function App() {
-  const [show1, setShow1] = useState(true);
+  const [tasksList, setTasksList] = useState([
+    { id: uuid(), name: "任务1" },
+    { id: uuid(), name: "任务2" },
+  ]);
   return (
-    <div className="container">
-      <SwitchTransition mode="out-in">
-        <CSSTransition
-          appear
-          timeout={800}
-          key={show1}
-          classNames={{
-            exit: "animate__bounceOut",
-            enter: "animate__bounceIn",
-          }}
-        >
-          <h1 className="animate_animated fast">
-            {show1 ? "title1" : "title2"}
-          </h1>
-        </CSSTransition>
-      </SwitchTransition>
-      <button onClick={() => setShow1(!show1)}>切换状态</button>
-    </div>
+    <>
+      <TransitionGroup appear component="ul" className="demo">
+        {tasksList.map((t) => (
+          <CSSTransition timeout={2000} key={t.id}>
+            <li>
+              {t.name}
+              <button
+                onClick={() => {
+                  setTasksList(tasksList.filter((it) => it.id !== t.id));
+                }}
+              >
+                删除
+              </button>
+            </li>
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
+      <button
+        onClick={() => {
+          const name = window.prompt("请输入任务名称");
+          setTasksList([...tasksList, { id: uuid(), name }]);
+        }}
+      >
+        添加一个任务
+      </button>
+    </>
   );
 }
