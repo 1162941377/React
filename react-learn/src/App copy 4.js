@@ -38,22 +38,7 @@ function D() {
 export default function App() {
   return (
     <Router>
-      <Route path="/a" exact component={A}>
-        {() => {
-          return (
-            <>
-              <h1
-                style={{
-                  color: "red",
-                }}
-              >
-                必定会看到的内容
-              </h1>
-              <p>呵呵</p>
-            </>
-          );
-        }}
-      </Route>
+      <Route path="/a" component={A}></Route>
       <Route path="/a/b" component={B}></Route>
       <Route component={C}></Route>
     </Router>
