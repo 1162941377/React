@@ -4,7 +4,7 @@ import Welcome from "./Welcome";
 import StudentList from "./student/StudentList";
 import StudentAdd from "./student/StudentAdd";
 import CourseAdd from "./course/CourseAdd";
-import CourseList from "./course/CourseAdd";
+import CourseList from "./course/CourseList";
 import Layout from "../components/Layout";
 import Header from "../components/Header";
 import Menu from "../components/Menu";
