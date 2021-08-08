@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import "./App.css";
 // import Link from "./Link"
 
@@ -49,10 +43,6 @@ function NavBar() {
       >
         去b页
       </NavLink>
-
-      <NavLink to="/abc" style={{ marginLeft: 20 }}>
-        其他页
-      </NavLink>
     </div>
   );
 }
@@ -61,11 +51,8 @@ export default function App() {
   return (
     <Router>
       <NavBar />
-      <Switch>
-        <Route path="/a" component={PageA} />
-        <Route path="/b" component={PageB} />
-        <Redirect from="/abc/:id" to="/a/:id" />
-      </Switch>
+      <Route path="/a" component={PageA} />
+      <Route path="/b" component={PageB} />
     </Router>
   );
 }
