@@ -1,8 +1,7 @@
 import React from "react";
-import { Route, NavLink } from "react-router-dom";
-import RouteGurad from "./RouteGuard";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import "./App.css";
-import reset from "./resetScroll";
+import withScroll from "./withScroll";
 
 function Page1() {
   return (
@@ -114,21 +113,18 @@ function Page2() {
   );
 }
 
+const Page1WithScroll = withScroll(Page1);
+const Page2WithScroll = withScroll(Page2);
+
 export default function App() {
   return (
-    <RouteGurad
-      onChange={(prevLocation, location) => {
-        if (prevLocation.pathname !== location.pathname) {
-          reset();
-        }
-      }}
-    >
-      <Route path="/page1" component={Page1} />
-      <Route path="/page2" component={Page2} />
+    <Router>
+      <Route path="/page1" component={Page1WithScroll} />
+      <Route path="/page2" component={Page2WithScroll} />
       <div className="nav">
         <NavLink to="/page1">页面1</NavLink>
         <NavLink to="/page2">页面2</NavLink>
       </div>
-    </RouteGurad>
+    </Router>
   );
 }
