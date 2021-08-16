@@ -1,32 +1,33 @@
-import { createStore } from "redux";
-
-// 假设仓库中仅存放了一个数字，该数字的变化可能是 +1 或 -1
-// 约定 action 的格式：{ type: "操作类型", payload: 附加数据 }
+import { createStore, bindActionCreators } from "redux";
+import * as actionTypes from "./action/action-types";
+import * as numberActions from "./action/number-action";
 
 /**
- * reducer本质上就是一个普通的函数
+ * reducer 本质是一个函数
  * @param {*} state 之前仓库中的状态（数据）
  * @param {*} action 描述要做什么的对象
  * @returns
  */
 function reducer(state, action) {
-  if (action.type === "increase") {
+  if (action.type === actionTypes.INCREASE) {
     return state + 1;
-  } else if (action.type === "decrease") {
+  } else if (action.type === actionTypes.DECREASE) {
     return state - 1;
+  } else if (action.type === actionTypes.SET) {
+    return action.payload;
   }
-  return state; // 传递了无效的type，不做任何更改
+  return state;
 }
 
-// 创建action
-const action = {
-  type: "decrease",
-};
+const store = createStore(reducer, 10);
 
-window.store = createStore(reducer, 10); // 创建仓库，传递reducer和默认值
+const bindActions = bindActionCreators(numberActions, store.dispatch);
 
-console.log(window.store.getState()); // 获取数据
+// 得到一个 increase actinon，并直接分发
+bindActions.getIncreaseAction(); // 向仓库分发 action
 
-window.store.dispatch(action); // 分发action
+console.log(store.getState()); // 得到仓库中的值
 
-console.log(window.store.getState()); // 获取数据
+bindActions.getSetAction(3); // 设置一个新的状态
+
+console.log(store.getState()); // 得到仓库中的值
