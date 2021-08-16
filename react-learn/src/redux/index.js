@@ -1,33 +1,23 @@
-import { createStore, bindActionCreators } from "redux";
-import * as actionTypes from "./action/action-types";
-import * as numberActions from "./action/number-action";
+import uuid from "uuid";
+import { createStore } from "redux";
+import reducer from "./reducer";
+import { createAddUserAction } from "./action/usersAction";
+import { createSetLoginUserAction } from "./action/loginUserAction";
 
-/**
- * reducer 本质是一个函数
- * @param {*} state 之前仓库中的状态（数据）
- * @param {*} action 描述要做什么的对象
- * @returns
- */
-function reducer(state, action) {
-  if (action.type === actionTypes.INCREASE) {
-    return state + 1;
-  } else if (action.type === actionTypes.DECREASE) {
-    return state - 1;
-  } else if (action.type === actionTypes.SET) {
-    return action.payload;
-  }
-  return state;
-}
+const store = createStore(reducer);
 
-const store = createStore(reducer, 10);
+console.log(store.getState());
 
-const bindActions = bindActionCreators(numberActions, store.dispatch);
+store.dispatch(
+  createAddUserAction({
+    id: uuid(),
+    name: "abc",
+    age: 10,
+  })
+);
 
-// 得到一个 increase actinon，并直接分发
-bindActions.getIncreaseAction(); // 向仓库分发 action
+console.log(store.getState());
 
-console.log(store.getState()); // 得到仓库中的值
+store.dispatch(createSetLoginUserAction("zjc"));
 
-bindActions.getSetAction(3); // 设置一个新的状态
-
-console.log(store.getState()); // 得到仓库中的值
+console.log(store.getState());
