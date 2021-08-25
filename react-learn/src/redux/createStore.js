@@ -1,77 +1,58 @@
-/**
- * 判断是否是一个平面对象
- * @param {*} obj
- * @returns
- */
-function isPlainObject(obj) {
-  if (typeof obj !== "object") {
-    return false;
-  }
-  return Object.getPrototypeOf(obj) === Object.prototype;
-}
-
-/**
- * 获取一个指定长度的随机字符串
- * @param {*} length
- */
-function getRandomString(length) {
-  return Math.random().toString(36).substr(2, length).split("").join(".");
-}
+import ActionTypes from "./utils/actionTypes";
+import isPlainObject from "./utils/isPlainObject";
 
 /**
  * 实现createStore的功能
- * @param {*} redcuer
- * @param {*} defaultStore
+ * @param {function} reducer reducer
+ * @param {any} defaultState 默认的状态值
  */
-export default function createStore(reducer, defaultStore) {
-  let currentState = defaultStore,
-    currentReducer = reducer;
+export default function createStore(reducer, defaultState) {
+  let currentReducer = reducer, //当前使用的reducer
+    currentState = defaultState; //当前仓库中的状态
 
-  const listeners = []; // 存储监听器
+  const listeners = []; //记录所有的监听器（订阅者）
 
-  // dispatch分发
   function dispatch(action) {
-    // 验证action是否是平面对象
+    //验证action
     if (!isPlainObject(action)) {
-      throw new TypeError("action must be a plain-object");
+      throw new TypeError("action must be a plain object");
     }
-    // 验证action是否存在
-    if (typeof action === undefined) {
+    //验证action的type属性是否存在
+    if (action.type === undefined) {
       throw new TypeError("action must has a property of type");
     }
     currentState = currentReducer(currentState, action);
-    
-    // 如果注册了监听器，依次执行
+
+    //运行所有的订阅者（监听器）
     for (const listener of listeners) {
       listener();
     }
   }
 
-  // getState获取状态
   function getState() {
     return currentState;
   }
 
-  // subscribe注册监听器
+  /**
+   * 添加一个监听器（订阅器）
+   */
   function subscribe(listener) {
-    listeners.push(listener); // 添加监听器
-    let isRemove = false; // 用于判断是否移除
-
+    listeners.push(listener); //将监听器加入到数组中
+    let isRemove = false; //是否已经移除掉了
     return function () {
       if (isRemove) {
         return;
       }
-
-      // 获取要移除的索引
+      //将listener从数组中移除
       const index = listeners.indexOf(listener);
       listeners.splice(index, 1);
       isRemove = true;
     };
   }
 
-  // 创建仓库时，需要分发一次初始的action
+  //创建仓库时，需要分发一次初始的action
   dispatch({
-    type: `@@redux/INIT${getRandomString(6)}`,
+    type: ActionTypes.INIT(),
   });
 
   return {
