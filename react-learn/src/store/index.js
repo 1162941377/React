@@ -1,19 +1,11 @@
-import { createStore, bindActionCreators, applyMiddleware } from "redux";
-import reducer from "./reducer";
-import {
-  createAddUserAction,
-  createDeleteUserAction,
-} from "./action/usersAction";
+import { createStore, applyMiddleware } from "redux";
+import reducer from "./reducer"
 import logger from "redux-logger";
+import thunk from "redux-thunk";
 
-const store = createStore(reducer, applyMiddleware(logger));
-
-const actionCreators = {
-  addUser: createAddUserAction,
-  deleteUser: createDeleteUserAction,
-};
-
-const actions = bindActionCreators(actionCreators, store.dispatch);
-
-actions.addUser({ id: 3, name: "zjc", age: 20 });
-actions.deleteUser(3);
+export default createStore(reducer,
+  applyMiddleware(
+    thunk,
+    logger
+  )
+)

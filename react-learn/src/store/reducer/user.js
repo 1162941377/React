@@ -1,22 +1,40 @@
 import * as usersAction from "../action/usersAction";
-import uuid from "uuid";
 
-const initialState = [
-  { id: uuid(), name: "用户1", age: 20 },
-  { id: uuid(), name: "用户2", age: 20 },
-];
+const initialState = {
+  isLoading: false, // 是否加载
+  datas: [], // 用户数组
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case usersAction.ADDUSER:
-      return [...state, payload];
+      return {
+        ...state,
+        datas: [...state.datas, payload],
+      };
     case usersAction.DELETEUSER:
-      return state.filter((it) => it.id !== payload);
+      return {
+        ...state,
+        datas: state.datas.filter((it) => it.id !== payload),
+      };
     case usersAction.UPDATEUSER:
-      return state.map((it) =>
-        it.id === payload.id ? { ...it, ...payload } : it
-      );
+      return {
+        ...state,
+        datas: state.map((it) =>
+          it.id === payload.id ? { ...it, ...payload } : it
+        ),
+      };
+    case usersAction.SETUSERS:
+      return {
+        ...state,
+        datas: payload,
+      };
+    case usersAction.SETLOADING:
+      return {
+        ...state,
+        isLoading: payload,
+      };
     default:
       return state;
   }
