@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const iterator = {
+        total: 3,
+        i: 1,
+        next() {
+          const obj = {
+            value: this.i > this.total ? undefined : this.i,
+            done: this.i > this.total,
+          };
+          this.i++;
+          return obj;
+        },
+      };
+
+      let next = iterator.next();
+      while (!next.done) {
+        // 若当前迭代的数据不是迭代器的结束
+        // 如果当前还有数据
+        console.log(next.value);
+        next = iterator.next();
+      }
+    </script>
+  </body>
+</html>

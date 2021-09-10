@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function createIterator(total) {
+        let i = 1;
+        return {
+          next() {
+            const obj = {
+              value: i > total ? undefined : i,
+              done: i > total,
+            };
+            i++;
+            return obj;
+          },
+        };
+      }
+
+      const iterator = createIterator(5);
+      let next = iterator.next();
+      while (!next.done) {
+        console.log(next.value);
+        next = iterator.next();
+      }
+    </script>
+  </body>
+</html>
