@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function* createGenerator() {
+        console.log("生成器函数的函数体 - 开始");
+        yield 1;
+        console.log("生成器函数的函数体 - 运行1");
+        yield 2;
+        console.log("生成器函数的函数体 - 运行2");
+        yield 3;
+        console.log("生成器函数的函数体 - 运行3");
+        return "生成器函数的函数体 - 结束";
+      }
+
+      const iterator = createGenerator();
+    </script>
+  </body>
+</html>

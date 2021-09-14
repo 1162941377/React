@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function asyncGetData() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("成哥");
+          }, 2000);
+        });
+      }
+
+      function* task() {
+        console.log("开始获取数据...");
+        const data1 = yield asyncGetData();
+        console.log("获取到了数据", data1);
+        const data2 = yield asyncGetData();
+        console.log("又获取到了数据", data2);
+        const data3 = yield asyncGetData();
+        console.log("又获取到了数据", data3);
+      }
+
+      function run(generatorFunc) {
+        const iterator = generatorFunc(); // 得到一个生成器
+        next();
+
+        function next(newValue) {
+          const result = iterator.next(newValue); // 调用生成器函数
+          if (result.done) {
+            return;
+          }
+          const value = result.value;
+          // 判断是否是promise对象
+          if (typeof value.then === "function") {
+            value.then((data) => next(data));
+          } else {
+            next(value);
+          }
+        }
+      }
+
+      run(task);
+    </script>
+  </body>
+</html>
