@@ -1,17 +1,26 @@
-/* eslint-disable require-yield */
-import { takeEvery } from "redux-saga/effects";
-import { actionTypes } from "../action/counter";
+import { fork, take, delay, put, race, call } from "redux-saga/effects";
+import { actionTypes, increase } from "../action/counter";
 
-function* asyncIncrease() {
-  console.log("触发了asyncIncrease");
-}
-
-function* asyncDecrease() {
-  console.log("触发了asyncDecrease");
+/**
+ * 自动增加和停止的流程控制
+ * 流程：自动增加 -> 停止 -> 自动增加 -> 停止
+ */
+function* autoTask() {
+  while (true) {
+    yield take(actionTypes.autoIncrease); //只监听autoIncrease
+    yield race({
+      autoIncrease: call(function* () {
+        while (true) {
+          yield delay(2000);
+          yield put(increase());
+        }
+      }),
+      cancel: take(actionTypes.stopAutoIncrease),
+    });
+  }
 }
 
 export default function* counterTask() {
-  yield takeEvery(actionTypes.asyncIncrease, asyncIncrease);
-  yield takeEvery(actionTypes.asyncDecrease, asyncDecrease);
-  console.log("正在监听asyncIncrease、asyncDecrease");
+  yield fork(autoTask);
+  console.log("正在监听autoIncrease");
 }
