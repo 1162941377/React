@@ -1,11 +1,10 @@
-import { searchStudents } from "../../../services/student";
-
 /**
  * 对学生查询结果改变的action的类型
  */
 export const actionTypes = {
   setStudentsAndTotal: Symbol("set-student-and-toal"),
   setIsLoading: Symbol("set-is-loading"),
+  fetchStudents: Symbol("fetchStudents"),
 };
 
 /**
@@ -40,11 +39,5 @@ export function setIsLoading(isLoading) {
  * @returns
  */
 export function fetchStudents() {
-  return async function (dispatch, getState) {
-    dispatch(setIsLoading(true));
-    const condition = getState().students.condition;
-    const resp = await searchStudents(condition);
-    dispatch(setStudentsAndTotal(resp, resp.cont));
-    dispatch(setIsLoading(false));
-  };
+  return { type: actionTypes.fetchStudents };
 }
