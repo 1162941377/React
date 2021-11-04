@@ -1,12 +1,9 @@
-import loginUser from "./loginUser";
-import user from "./user";
+// 创建唯一的reducer
+import students from "./student";
+import counter from "./counter";
+import { combineReducers } from "redux";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (state = {}, action) => {
-  const newState = {
-    loginUser: loginUser(state.loginUser, action),
-    user: user(state.user, action),
-  };
-
-  return newState;
-};
+export default combineReducers({
+  students,
+  counter,
+});

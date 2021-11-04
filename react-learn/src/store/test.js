@@ -1,4 +1,23 @@
 import store from "./index";
-import { fetchUsers } from "./action/usersAction";
+import {
+  increase,
+  decrease,
+  asyncIncrease,
+  asyncDecrease,
+} from "./action/counter";
 
-store.dispatch(fetchUsers());
+window.increase = function () {
+  store.dispatch(increase());
+};
+
+window.decrease = function () {
+  store.dispatch(decrease());
+};
+
+window.asyncIncrease = function () {
+  store.dispatch(asyncIncrease());
+};
+
+window.asyncDecrease = function () {
+  store.dispatch(asyncDecrease());
+};
