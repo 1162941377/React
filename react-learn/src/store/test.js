@@ -4,8 +4,7 @@ import {
   decrease,
   asyncIncrease,
   asyncDecrease,
-  autoIncrease,
-  stopAutoIncrease,
+  add,
 } from "./action/counter";
 import { fetchStudents } from "./action/student/searchResult";
 
@@ -29,10 +28,6 @@ window.fetchStudens = function () {
   store.dispatch(fetchStudents());
 };
 
-window.autoIncrease = function () {
-  store.dispatch(autoIncrease());
-};
-
-window.stopAutoIncrease = function () {
-  store.dispatch(stopAutoIncrease());
+window.add = function (n) {
+  store.dispatch(add(n));
 };
