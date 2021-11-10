@@ -1,10 +1,5 @@
 import { takeEvery, delay, put } from "redux-saga/effects";
-import {
-  asyncIncrease,
-  asyncDecrease,
-  increase,
-  decrease,
-} from "../action/counter";
+import { increase, decrease, actionTypes } from "../action/counter";
 
 function* asyncIncreaseSaga() {
   yield delay(2000);
@@ -17,7 +12,7 @@ function* asyncDecreaseSaga() {
 }
 
 export default function* counterTask() {
-  yield takeEvery(asyncIncrease.toString(), asyncIncreaseSaga);
-  yield takeEvery(asyncDecrease.toString(), asyncDecreaseSaga);
-  console.log("正在监听asyncIncrease、asyncDecrease");
+  yield takeEvery(actionTypes.asyncIncrease, asyncIncreaseSaga);
+  yield takeEvery(actionTypes.asyncDecrease, asyncDecreaseSaga);
+  console.log("正在监听 asyncIncrease、asyncDecrease");
 }
